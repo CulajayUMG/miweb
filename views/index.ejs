@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personajes de Rick and Morty</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .character {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 200px;
+      margin: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .character img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .character h3 {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <% characters.forEach(character => { %>
+    <div class="character">
+      <img src="<%= character.image %>" alt="<%= character.name %>">
+      <h3><%= character.name %></h3>
+      <p><%= character.species %> - <%= character.status %></p>
+    </div>
+  <% }) %>
+</body>
+</html>

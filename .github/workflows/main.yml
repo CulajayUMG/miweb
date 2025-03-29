@@ -45,3 +45,5 @@ jobs:
           context: .  # El contexto es el directorio actual (donde está el Dockerfile)
           push: true  # La imagen se enviará (push) al repositorio de Docker Hub
           tags: luisdocker21/miweb:latest  # Etiqueta de la imagen, en este caso "latest" en el repositorio "luisdocker21/miweb"
+
+          

@@ -14,6 +14,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.get('/', async (req, res) => {
   try {
     const response = await axios.get('https://rickandmortyapi.com/api/character');
+    //https://rickandmortyapi.com/api/character
+    //https://rickandmortyapi.comcharacter
     const characters = response.data.results;
     res.render('index', { characters });
   } catch (error) {

@@ -23,7 +23,7 @@ app.get('/', async (req, res) => {
   }
 });
 
-// Iniciar el servidor
+// Iniciar el servidor docker
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`);
 });

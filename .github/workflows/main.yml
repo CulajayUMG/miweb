@@ -1,38 +1,47 @@
+# Definición del nombre del pipeline
 name: CI/CD Pipeline
 
+# Evento que dispara el pipeline
 on:
   push:
     branches:
-      - main
+      - main  # El pipeline se ejecutará cuando haya un "push" en la rama principal "main"
 
 jobs:
+  # Definición del trabajo de construcción
   build:
-    runs-on: ubuntu-latest
+    # El trabajo se ejecutará en un runner con el sistema operativo Windows (última versión)
+    runs-on: windows-latest
 
     steps:
+      # Paso 1: Checkout del código del repositorio
       - name: Checkout del código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4  # Esta acción extrae el código del repositorio para los siguientes pasos
 
+      # Paso 2: Configuración de Docker Buildx
       - name: Configurar Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v2  # Configura la herramienta Docker Buildx, útil para construir imágenes de Docker
 
+      # Paso 3: Cacheo de capas de Docker
       - name: Cachear capas de Docker
-        uses: actions/cache@v4
+        uses: actions/cache@v4  # Esta acción cachea las capas de Docker para acelerar futuras construcciones
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          path: C:\tmp\.buildx-cache  # Ruta donde se guardará el cache de las capas
+          key: ${{ runner.os }}-buildx-${{ github.sha }}  # Clave única basada en el sistema operativo y el hash del commit actual
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-buildx-  # Clave base para intentar restaurar cache en futuras ejecuciones si no hay coincidencias exactas
 
+      # Paso 4: Iniciar sesión en Docker Hub
       - name: Iniciar sesión en Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v3  # Esta acción se encarga de autenticar al pipeline con Docker Hub
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USERNAME }}  # Nombre de usuario almacenado en los secretos de GitHub
+          password: ${{ secrets.DOCKER_PASSWORD }}  # Contraseña almacenada en los secretos de GitHub
 
+      # Paso 5: Construir la imagen Docker y enviarla a Docker Hub
       - name: Construir y enviar imagen Docker
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v5  # Acción para construir la imagen Docker y enviarla a un repositorio
         with:
-          context: .
-          push: true
-          tags: luisdocker21/rickdocker:latest
+          context: .  # El contexto es el directorio actual (donde está el Dockerfile)
+          push: true  # La imagen se enviará (push) al repositorio de Docker Hub
+          tags: luisdocker21/miweb:latest  # Etiqueta de la imagen, en este caso "latest" en el repositorio "luisdocker21/miweb"
